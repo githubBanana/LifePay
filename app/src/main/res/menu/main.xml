@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_zoom"
+        android:title="zoom"
+        android:orderInCategory="80"
+        android:icon="@android:drawable/ic_menu_zoom"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_edit"
+        android:title="edit"
+        android:orderInCategory="90"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="100"
+        android:title="setting"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/version"
+        android:orderInCategory="100"
+        android:title="version"
+        app:showAsAction="never">
+    </item>
+
+</menu>
