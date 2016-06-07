@@ -1,27 +1,38 @@
 package com.xs.lifepay;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.jakewharton.rxbinding.view.RxView;
 import com.xs.lifepay.dialog.AppHelpFragment;
 
-import rx.Subscriber;
-
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener{
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private TextView _tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,18 +43,37 @@ implements NavigationView.OnNavigationItemSelectedListener{
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawer,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+                this,drawer,R.string.navigation_drawer_open,R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);//slideOffset = 0 :Disable the Hamburger icon animation
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navi_main);
         navigationView.setNavigationItemSelectedListener(this);
 
-        _tv = (TextView) findViewById(R.id.tv_main);
         final FloatingActionButton _fb = (FloatingActionButton) findViewById(R.id.fb_main);
         RxView.clicks(_fb).subscribe(aVoid -> Snackbar.make(drawer,"this is LifePay.",Snackbar.LENGTH_LONG).show());
+        initView(navigationView);
     }
+    private void initView(NavigationView container) {
+        final ImageView _ivHead = (ImageView) container.getHeaderView(0).findViewById(R.id.iv_main_navi_head);
+        Uri uri = Uri.parse("http://weidongzn.com//Files/upload/201605/9/i20160509155458524.jpg");
+        Glide.with(getApplicationContext()).load(uri).asBitmap().thumbnail(0.6f).centerCrop().placeholder(R.mipmap.ic_launcher).into(new BitmapImageViewTarget(_ivHead) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), resource);
+                roundedBitmapDrawable.setCircular(true);
+                getView().setImageDrawable(roundedBitmapDrawable);
+            }
+        });
 
+        final TextView _tvName = (TextView) container.getHeaderView(0).findViewById(R.id.tv_username);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main,menu);
@@ -101,7 +131,6 @@ implements NavigationView.OnNavigationItemSelectedListener{
 
                 break;
         }
-        _tv.setText(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -118,7 +147,4 @@ implements NavigationView.OnNavigationItemSelectedListener{
 
     }
 
-    private void setToolBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
 }

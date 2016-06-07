@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="160dp"
+    android:id="@+id/navi_head_layout_id"
     android:gravity="bottom"
     android:background="@drawable/shape_anvi_head_bg">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_main_navi_head"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:padding="@dimen/activity_horizontal_margin"
-        android:src="@mipmap/ic_launcher"/>
+        />
 
     <TextView
+        android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/activity_horizontal_margin"
