@@ -56,7 +56,7 @@ implements NavigationView.OnNavigationItemSelectedListener{
         navigationView.setNavigationItemSelectedListener(this);
 
         final FloatingActionButton _fb = (FloatingActionButton) findViewById(R.id.fb_main);
-        RxView.clicks(_fb).subscribe(aVoid -> Snackbar.make(drawer,"this is LifePay.",Snackbar.LENGTH_LONG).show());
+//        RxView.clicks(_fb).subscribe(aVoid -> Snackbar.make(drawer,"this is LifePay.",Snackbar.LENGTH_LONG).show());
         initView(navigationView);
     }
     private void initView(NavigationView container) {
